@@ -7,9 +7,10 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>Active</th>
-            <th>Name</th>
-            <th>Role</th>
+            <th>Status</th>
+            <th>Naam</th>
+            <th>Foto</th>
+            <th>Rol</th>
             <th>Email</th>
             <th>Created</th>
             <th>Updated</th>
@@ -22,8 +23,9 @@
 
                 <tr>
                     <td>{{$user->id}}</td>
-                    <td>{{$user->is_active == 1 ? 'Active':'Not active'}}</td>
-                    <td>{{$user->name}}</td>
+                    <td>{{$user->is_active == 1 ? 'Actief':'Niet actief'}}</td>
+                    <td><a href="{{route('admin.users.edit', $user->id)}}">{{$user->name}}</a></td>
+                    <td><img height="50px" src="{{$user->photo ? $user->photo->file_path : '/images/dog.jpg'}}"></td>
                     <td>{{$user->role->name}}</td>
                     <td>{{$user->email}}</td>
                     <td>{{$user->created_at->diffForHumans()}}</td>
