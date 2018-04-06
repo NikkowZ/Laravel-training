@@ -51,10 +51,19 @@
     </div>
 
     <div class="form-group">
-        {!! Form::submit('Wijzigingen opslaan', ['class'=>'btn btn-primary']) !!}
+        {!! Form::submit('Wijzigingen opslaan', ['class'=>'btn btn-primary col-sm-6']) !!}
     </div>
 
-    {!! Form::close() !!}
+        {!! Form::close() !!}
+
+
+
+
+    {!! Form::open(['method'=>'DELETE', 'action'=>['AdminUsersController@destroy', $user->id]]) !!}
+
+            {!! Form::submit('Verwijder gebruiker', ['class'=>'btn btn-danger col-sm-6']) !!}
+
+            {!! Form::close() !!}
 
     </div>
 

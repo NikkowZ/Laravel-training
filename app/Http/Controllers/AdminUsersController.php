@@ -10,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Session;
 
 class AdminUsersController extends Controller
 {
@@ -33,6 +34,8 @@ class AdminUsersController extends Controller
     {
         $roles = Role::lists('name', 'id')->all();
 
+        Session::flash('create', 'Gebruiker succesvol aangemaakt');
+
         return view('admin.users.create', compact('roles'));
     }
 
@@ -44,7 +47,6 @@ class AdminUsersController extends Controller
      */
     public function store(UserRequest $request)
     {
-
 
         $store = $request->all();
 
@@ -89,6 +91,8 @@ class AdminUsersController extends Controller
     {
         $user = User::FindOrFail($id);
         $roles = Role::lists('name', 'id')->all();
+
+        Session::flash('edit', 'Gebruiker gewijzigd');
 
         return view('admin.users.edit', compact('user', 'roles'));
     }
@@ -142,6 +146,16 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        return view('admin.users.delete');
+
+        $user = User::FindOrFail($id);
+
+        unlink(public_path() . $user->photo->file_path);
+
+        $user->delete();
+
+        Session::flash('deleted', 'Gebruiker verwijderd');
+
+        return redirect('/admin/users');
+
     }
 }
